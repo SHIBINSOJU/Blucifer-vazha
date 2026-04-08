@@ -33,6 +33,10 @@ client.on('messageCreate', async (message) => {
         const command = require('./commands/say');
         command.execute(message, args);
     }
+    if (cmd === 'testwelcome') {
+    const command = require('./commands/testwelcome');
+    command.execute(message);
+    }
 });
 
 // ===== LOGIN =====
