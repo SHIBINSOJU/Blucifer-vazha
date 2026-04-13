@@ -1,13 +1,18 @@
 # Blucifer Discord Bot
 
-A feature-rich Discord bot with AutoMod, moderation tools, welcome cards, and more.
+A feature-rich Discord bot with AutoMod, moderation tools, welcome cards, slash commands, and more.
+
+Created by **[SHIBINSOJU](https://shibin.shotdevs.live/)**
+
+[![GitHub](https://img.shields.io/badge/GitHub-SHIBINSOJU-181717?style=flat&logo=github)](https://github.com/SHIBINSOJU)
 
 ## Features
 
 - **Welcome System** - Beautiful welcome cards with customizable backgrounds
 - **AutoMod** - Automated moderation with anti-spam, anti-invite, bad words filter, and more
-- **Moderation Commands** - Warn, mute, kick, ban, purge messages
-- **Basic Commands** - Help, ping, uptime, info
+- **Moderation Commands** - Warn, mute, kick, ban, purge messages (prefix & slash)
+- **Basic Commands** - Help, ping, uptime, info (prefix & slash)
+- **Slash Commands** - Modern Discord slash command support
 - **Persistent Storage** - SQLite database for warnings and settings
 
 ## Prerequisites
@@ -36,13 +41,20 @@ cp .env.example .env
 4. Edit `.env` and add your bot token and configuration:
 ```env
 TOKEN=your_bot_token_here
+CLIENT_ID=your_client_id_here
+GUILD_ID=your_guild_id_here
 WELCOME_CHANNEL_ID=your_welcome_channel_id
 RULES_CHANNEL_ID=your_rules_channel_id
 AUTO_ROLE_ID=your_auto_role_id
 SAY_ROLE_ID=your_say_role_id
 ```
 
-5. Start the bot:
+5. Deploy slash commands (required for slash commands to work):
+```bash
+node deploy-commands.js
+```
+
+6. Start the bot:
 ```bash
 node index.js
 ```
@@ -76,14 +88,16 @@ node index.js
 
 ## Commands
 
+The bot supports both **prefix commands** (`!command`) and **slash commands** (`/command`).
+
 ### General Commands
 
-| Command | Description | Usage |
-|---------|-------------|-------|
-| `!help` | Show all commands | `!help [command]` |
-| `!ping` | Check bot latency | `!ping` |
-| `!uptime` | Show bot uptime | `!uptime` |
-| `!info` | Bot information | `!info` |
+| Prefix | Slash | Description |
+|--------|-------|-------------|
+| `!help` | `/help` | Show all commands |
+| `!ping` | `/ping` | Check bot latency |
+| `!uptime` | - | Show bot uptime |
+| `!info` | `/info` | Bot information |
 
 ### Welcome Commands
 
@@ -93,17 +107,17 @@ node index.js
 
 ### Moderation Commands
 
-| Command | Description | Usage | Permission |
-|---------|-------------|-------|------------|
-| `!warn` | Warn a user | `!warn @user [reason]` | Moderate Members |
-| `!warnings` | View user warnings | `!warnings [@user]` | Moderate Members |
-| `!unwarn` | Remove warning(s) | `!unwarn @user [id]` | Moderate Members |
-| `!mute` | Mute a user | `!mute @user [duration] [reason]` | Moderate Members |
-| `!unmute` | Unmute a user | `!unmute @user [reason]` | Moderate Members |
-| `!kick` | Kick a user | `!kick @user [reason]` | Kick Members |
-| `!ban` | Ban a user | `!ban @user [reason]` | Ban Members |
-| `!unban` | Unban a user | `!unban <user_id> [reason]` | Ban Members |
-| `!purge` | Delete messages | `!purge <1-100>` | Manage Messages |
+| Prefix | Slash | Description | Permission |
+|--------|-------|-------------|------------|
+| `!warn` | `/warn` | Warn a user | Moderate Members |
+| `!warnings` | `/warnings` | View user warnings | Moderate Members |
+| `!unwarn` | - | Remove warning(s) | Moderate Members |
+| `!mute` | `/mute` | Mute a user | Moderate Members |
+| `!unmute` | - | Unmute a user | Moderate Members |
+| `!kick` | `/kick` | Kick a user | Kick Members |
+| `!ban` | `/ban` | Ban a user | Ban Members |
+| `!unban` | - | Unban a user | Ban Members |
+| `!purge` | `/purge` | Delete messages | Manage Messages |
 
 ### Utility Commands
 
@@ -166,6 +180,8 @@ node index.js
 | Variable | Description | Required |
 |----------|-------------|----------|
 | `TOKEN` | Discord bot token | Yes |
+| `CLIENT_ID` | Discord application client ID | Yes (for slash commands) |
+| `GUILD_ID` | Server ID for testing | Yes (for slash commands) |
 | `WELCOME_CHANNEL_ID` | Channel for welcome messages | No |
 | `RULES_CHANNEL_ID` | Channel for rules button | No |
 | `AUTO_ROLE_ID` | Role given to new members | No |
@@ -210,6 +226,12 @@ ISC
 
 ## Credits
 
+**Created by [SHIBINSOJU](https://shibin.shotdevs.live/)**
+
+- GitHub: [@SHIBINSOJU](https://github.com/SHIBINSOJU)
+- Portfolio: [shibin.shotdevs.live](https://shibin.shotdevs.live/)
+
+### Technologies Used
 - Built with [Discord.js](https://discord.js.org/)
 - Canvas rendering with [node-canvas](https://github.com/Automattic/node-canvas)
 - Database powered by [better-sqlite3](https://github.com/WiseLibs/better-sqlite3)
