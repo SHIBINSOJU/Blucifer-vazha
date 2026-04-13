@@ -1,5 +1,4 @@
 {
-<<<<<<< HEAD
   "name": "blucifer-vazha",
   "version": "1.0.0",
   "description": "",
@@ -20,6 +19,7 @@
   },
   "homepage": "https://github.com/SHIBINSOJU/Blucifer-vazha#readme",
   "dependencies": {
+    "better-sqlite3": "^12.9.0",
     "canvas": "^3.2.3",
     "discord.js": "^14.26.2",
     "dotenv": "^17.4.1"
