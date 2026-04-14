@@ -1,5 +1,5 @@
 require('dotenv').config();
-const { AttachmentBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
+const { AttachmentBuilder } = require('discord.js');
 const welcomeCard = require('../utils/welcomeCard');
 
 module.exports = async (client) => {
@@ -15,39 +15,16 @@ module.exports = async (client) => {
             const buffer = await welcomeCard(member);
             const attachment = new AttachmentBuilder(buffer, { name: 'welcome.png' });
 
-            // ===== BUTTON =====
-            const row = new ActionRowBuilder().addComponents(
-                new ButtonBuilder()
-                    .setLabel('Rules')
-                    .setStyle(ButtonStyle.Primary)
-                    .setCustomId('rules_btn')
-            );
-
             const channel = member.guild.channels.cache.get(process.env.WELCOME_CHANNEL_ID);
             if (!channel) return;
 
             await channel.send({
                 content: `Welcome to ZeakMC ${member}`,
-                files: [attachment],
-                components: [row]
+                files: [attachment]
             });
 
         } catch (err) {
             console.log(err);
-        }
-    });
-
-    // ===== BUTTON INTERACTION =====
-    client.on('interactionCreate', async (interaction) => {
-        if (!interaction.isButton()) return;
-
-        if (interaction.customId === 'rules_btn') {
-            const channelId = process.env.RULES_CHANNEL_ID;
-
-            await interaction.reply({
-                content: `Check rules here: <#${channelId}>`,
-                ephemeral: true
-            });
         }
     });
 };

@@ -1,6 +1,6 @@
 require('dotenv').config();
 
-const { Client, GatewayIntentBits, Collection, REST, Routes } = require('discord.js');
+const { Client, GatewayIntentBits, Collection, REST, Routes, ActivityType } = require('discord.js');
 const fs = require('fs');
 const path = require('path');
 const AutoModHandler = require('./utils/automodHandler');
@@ -37,6 +37,23 @@ client.once('ready', () => {
     console.log(`${client.user.tag} is online!`);
     console.log(`Loaded in ${client.guilds.cache.size} server(s)`);
     console.log(`Loaded ${client.slashCommands.size} slash command(s)`);
+
+    // ===== ACTIVITY STATUS =====
+    const activities = [
+        { name: 'ZeakMC', type: ActivityType.Playing },
+        { name: 'ZeakMC', type: ActivityType.Watching }
+    ];
+
+    let activityIndex = 0;
+    
+    // Set initial activity
+    client.user.setActivity(activities[activityIndex]);
+
+    // Rotate activity every 30 seconds
+    setInterval(() => {
+        activityIndex = (activityIndex + 1) % activities.length;
+        client.user.setActivity(activities[activityIndex]);
+    }, 30000);
 });
 
 // ===== LOAD EVENTS =====
